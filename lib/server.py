@@ -32,13 +32,13 @@ class WsRequestHandler(websocket.WebSocketHandler):
 	ID = address[0]+':'+str(address[1])
 	self.queue.put({'type':'close', 'ID': ID})
 
-class Server(Thread):
-    def __init__(self, port, queue, debug=False):
+class WebSocketServerThread(Thread):
+    def __init__(self, app):
 	Thread.__init__(self)
-	self.port = port
-	self.logger = Logger("server:{}".format(port))
-	self.debug = debug
-	self.queue = queue
+	self.port = app.port
+	self.logger = Logger("server:{}".format(self.port))
+	self.debug = app.debug
+	self.queue = app
 
     def run(self):
 	self.logger.info("Starting up...")

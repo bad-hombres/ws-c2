@@ -1,4 +1,5 @@
 from helpers import Colour
+import sys
 
 
 class Logger(object):

@@ -1,4 +1,27 @@
 
+def banner():
+    print Colour.red("""
+                                    ,;;::;,,                                    
+                                ,clllcccccccccc:'                               
+                              ,odol'          ,coc'                             
+                             :xoldc'            'od'                            
+                            ckclko:'             'xx'                           
+                           ;Oolko:;               c0l                           
+                '',;:cclllo0Olxxcc:               ,O0:''''''                    
+     ';:clllllcccccllodxxdkNkdOdll;                dNOddolccccc::::::cc:;,      
+   'coxdl:;,,'        :looOWkdOoll;                lXOllc:;'     ''',,;:ldxo'   
+   :lclooooolc;,'   ':lood0WkxOolc;                lNOllccc:,'''',;;::::;'ok,   
+   ;ooxdoc;oOkodddodxkkkkxKWNXXKOOxooooooodxxxxkkOOKXkdoooolllcccol:;,cxl;oc    
+    ,lxdoolcod:  'cxkxoccclookKkodooooxkkdooollcoxo;,,''';o:    lxol;,odlxd     
+      ;clll:ccoocddclllo;   cdoo:    ,dxxo,    cxxdo;   :xkdo: cdcolcollxd,     
+         ;cloloOOc ;oc';odoxd::cdo' ldlccod: ,do:clcll:locdl;cddccxolool;       
+            ',:cccccodl:;cdo',lc;lxxl';lc;,lodc ,loc;lO0doxxolddllcc;,          
+                   ',;:clllcccloookOdoxxdxookxooooooooollc::,'                  
+                                ',,;;;;;;;;;;;,'                                
+
+                                HombresC2 v0.1 (c) Bad Hombres 2018
+    """, bold = True)
+
 class Colour(object):
     colours = {
         "red": "31",

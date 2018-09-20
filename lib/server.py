@@ -18,19 +18,17 @@ class WsRequestHandler(websocket.WebSocketHandler):
             self.logger.debug("[{}] {}".format(self.get_address(), message))
 
     def open(self):
-        self.debug("Client connected")
+        self.logger.info("Client connected")
         ID = self.get_address()
-	self.queue.put({'type':'open', 'ID': ID, 'socket': self})
+	self.queue.new_client(ID, self)
 
     def on_message(self, message):
         self.debug("Message recieved: {}".format(message))
-	self.queue.put({'type':'response', 'value': message})
+        self.queue.new_message(self.get_address(), message)
 
     def on_close(self):
-        self.debug("Client closed connection")
-	address = self.request.connection.context.address
-	ID = address[0]+':'+str(address[1])
-	self.queue.put({'type':'close', 'ID': ID})
+        self.logger.warn("Client [{}] closed connection".format(self.get_address()))
+	self.queue.client_disconnect(self.get_address())
 
 class WebSocketServerThread(Thread):
     def __init__(self, app):

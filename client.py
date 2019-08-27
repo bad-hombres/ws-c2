@@ -98,7 +98,7 @@ def on_open(ws):
 
 
 if __name__ == "__main__":
-    ws = websocket.WebSocketApp("wss://www.bh7kf.co.uk/ws",
+    ws = websocket.WebSocketApp("wss://<ip>/ws",
                               on_message = on_message,
                               on_error = on_error,
                               on_close = on_close)

@@ -3,6 +3,7 @@ from logging import Logger
 from helpers import Colour
 from cmd import Cmd
 import sys, os
+import shlex
 
 class ConsoleInterface(Cmd):
     def __init__(self, server):
@@ -11,12 +12,18 @@ class ConsoleInterface(Cmd):
         self.server = server
         self.prompt = "[" + Colour.red("no agent", bold=True) + "]#> "
         self.current_agent = ""
-        self.timeout = 30
 
     def do_set(self, line):
         if line.lower().startswith("timeout"):
-            self.timeout = int(line.split(" ")[1])
-            self.logger.info("Command timeout set to {} secs".format(self.timeout))
+            timeout = int(line.split(" ")[1])
+            self.server.set_timeout(timeout)
+            self.logger.info("Command timeout set to {} secs".format(timeout))
+
+    def do_record(self, line):
+        self.server.record_mic(line)
+
+    def do_stop_recording(self, line):
+        self.server.stop_recording()
 
     def do_exit(self, line):
         self.server.shutdown()
@@ -43,7 +50,7 @@ class ConsoleInterface(Cmd):
             self.set_current_agent(line)
         else:
             self.logger.error("Agent is not alive!")
-  
+
     def do_shell(self, line):
         self.logger.info("Interacting with [{}]".format(self.current_agent))
         self.logger.warn("Use exit to quit....")
@@ -54,12 +61,19 @@ class ConsoleInterface(Cmd):
                 return
 
             if cmd != "":
-                response = self.server.run_command(cmd, self.timeout)
+                response = self.server.run_command(cmd)
                 print response
-
 
     def do_run(self, line):
         response = self.server.run_command(line)
+        print response
+
+    def do_download(self, line):
+        self.server.download_file(line)
+
+    def do_upload(self, line):
+        f, target = shlex.split(line)
+        response = self.server.upload_file(f, target)
         print response
 
     def emptyline(self):
